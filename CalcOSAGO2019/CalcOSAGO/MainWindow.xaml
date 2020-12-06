@@ -1,0 +1,155 @@
+﻿<Window x:Class="CalcOSAGO.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalcOSAGO"
+        mc:Ignorable="d"
+        Title="Калькулятор ОСАГО 2019 v1.0 от 01.08.2019г." Height="585" Width="820" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="logo_new.ico" Background="#6db6a2" Foreground="#FFFFD16D">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibleIfTrueConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="585"/>
+            <ColumnDefinition Width="25*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Margin="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6">
+            <StackPanel Margin="0,5" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <Label Content="ФИО страхователя:" VerticalContentAlignment="Center"/>
+                    <TextBox Margin="2,0" MinWidth="300" VerticalContentAlignment="Center" ToolTip="Фамилия, Имя, Отчество страхователя"
+                             Text="{Binding FioStrah, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox MinWidth="80" ItemsSource="{Binding DictUrFizLico, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedUrFizLicoIndex}" ToolTip="Организационно-правовая форма"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <Label Content="Расчетный КБМ:"/>
+                    <!--<ComboBox MinWidth="30" ItemsSource="{Binding NewListKbm, UpdateSourceTrigger=PropertyChanged}" IsEditable="True"
+                              SelectedItem="{Binding ValueKbm}" DisplayMemberPath="text_value" IsEnabled="{Binding BlockKbm}"/>-->
+                    <TextBox Text="{Binding NewKbm}" Width="40" MaxLength="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                             IsEnabled="{Binding BlockKbm}"/>
+                    <!--<TextBox Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                             Text="{Binding Koef_kbm, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding BlockKbm}"/>-->
+                    <CheckBox Margin="10,0,0,0" Content="Гражданин иностранного государства" VerticalAlignment="Center"
+                              IsChecked="{Binding IsForegin, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Margin="10,0,0,0" Content="Используется как такси" VerticalAlignment="Center"
+                              IsChecked="{Binding IsTaxi, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <Label Content="Категория ТС:"/>
+                    <ComboBox MinWidth="200" ItemsSource="{Binding ListCategoriaTs, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedCategoriaTS}" DisplayMemberPath="kategoria_ts"/>
+                    <CheckBox Margin="10,0" Content="Прицеп" VerticalAlignment="Center" ToolTip="ТС используется с прицепом"
+                              IsChecked="{Binding IsPricep, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <CheckBox Margin="5,0" Content="Следует к месту регистрации ТС" ToolTip="При установке, срок страхования до 20 дней включительно"
+                               IsChecked="{Binding IsTransit, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                    <Label  Content="Мощность ТС, л.с.:"/>
+                    <TextBox Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             MaxLength="4" Text="{Binding PowerTS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"/>
+                    <Label Margin="5,0,0,0" Content="Разрешенная масса, т.:"/>
+                    <TextBox Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             MaxLength="3" Text="{Binding MaxMassaTS, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <CheckBox Margin="5,0" Content="Ограничение лиц, допущенных к управлению" VerticalAlignment="Center"
+                              IsChecked="{Binding IsDriverLimit, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding BlockDriverLimit}"/>
+                    <CheckBox Margin="210,0" Content="Кн" IsChecked="{Binding IsWarinig, UpdateSourceTrigger=PropertyChanged}"
+                              VerticalAlignment="Center" ToolTip="Коэффициент особого случая"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Visibility="{Binding Path=IsDriverLimit,Converter={StaticResource VisibleIfTrueConverter}}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button MinWidth="150" Margin="5" Content="Добавить водителя" Command="{Binding CommandAddDriver}" Template="{StaticResource ButtonTemplate}"/>
+                        <Button MinWidth="150" Margin="5" Content="Удалить водителя" Command="{Binding CommandDelDriver}" Template="{StaticResource ButtonTemplate}"/>
+                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="datagridDriver" Margin="3,0,3,3" AutoGenerateColumns="False" ItemsSource="{Binding Drivers}" CanUserAddRows="False"
+                                   SelectedItem="{Binding SelectedDriver}" CanUserResizeRows="False" HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="" Width="180" Binding="{Binding Path=NameDriver}" FontSize="14" FontWeight="Bold"/>
+                                <DataGridTemplateColumn Header="Дата рождения" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Path=AgeDriver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:dd.MM.yyyy}}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Начало стажа вождения" Width="160">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Path=StageDriver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:dd.MM.yyyy}}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--<DataGridTextColumn Header="КБМ" Width="*" Binding="{Binding Path=Koeff_kbm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat='0.00'}"/>-->
+                                <!--<DataGridComboBoxColumn Header="КБМ-2" Width="50" ItemsSource="{Binding ListKbm}" SelectedItemBinding="{Binding ValueKbm}" DisplayMemberPath="text_value"/>-->
+                                <DataGridTemplateColumn Header="КБМ" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type local:Driver}">
+                                            <ComboBox ItemsSource="{Binding DataContext.ListKbm, ElementName=datagridDriver}" DisplayMemberPath="koeff"
+                                                      SelectedItem="{Binding Koeff_kbm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontWeight="Bold"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </StackPanel>                
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <CheckBox Margin="5,0" Content="Регулярные пассажирские перевозки" VerticalAlignment="Center"
+                              IsChecked="{Binding IsRegularPerevoz, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Margin="5,0,0,0" Content="Пассажирских мест:"/>
+                    <TextBox Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             MaxLength="2" Text="{Binding CountPassangers, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <Label Content="Период использования:"/>
+                    <ComboBox MinWidth="100" ItemsSource="{Binding ListPeriodUse,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding BlockPeriodUse}"
+                              SelectedItem="{Binding SelectedPeriodUse}" DisplayMemberPath="text_value" ToolTip="Период использования ТС"/>
+                    <Label Content="Срок страхования:"/>
+                    <ComboBox MinWidth="100" ItemsSource="{Binding ListPeriodStrah, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedPeriodStrah}" DisplayMemberPath="text_value"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <Label Content="Территория:"/>
+                    <ComboBox MinWidth="150" ItemsSource="{Binding ListRegions, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding EnableRegions}"
+                              SelectedItem="{Binding SelectedRegion}" DisplayMemberPath="text_value"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <Label Content="Уточнение территории:"/>
+                    <ComboBox MinWidth="150" ItemsSource="{Binding ListSubRegions, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding EnableSubRegions}"
+                              SelectedItem="{Binding SelectedSubRegion}" DisplayMemberPath="text_value"/>
+                </StackPanel>
+                <!--<Button Margin="10,20" Command="{Binding CommandShowSettings}" Height="25" Template="{StaticResource ButtonTemplate}" ToolTip="Изменение базового тарифа">
+                    <TextBlock Text="Изменить базовый тариф" Margin="5,0" Foreground="{StaticResource ColorForeground}" FontWeight="Bold"/>
+                </Button>-->
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Margin="5" Grid.Column="1" Grid.Row="0" Grid.RowSpan="6">
+            <StackPanel Margin="0,5" Orientation="Vertical" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3">
+                <Button Margin="5,5,5,0" MinHeight="40" Command="{Binding CommandReset}" Template="{StaticResource ButtonTemplate}"
+                        ToolTip="Возврат к стандартным настройкам">
+                    <TextBlock Text="Сброс результата" Foreground="{DynamicResource ColorForeground}" FontWeight="Bold"/>
+                </Button>
+                <Button Margin="5,5,5,0" MinHeight="40" Command="{Binding CommandCalc}" Template="{StaticResource ButtonTemplate}" ToolTip="Расчет страховой премии">
+                    <TextBlock Text="Расчет страховой премии" Foreground="{DynamicResource ColorForeground}" FontWeight="Bold"/>
+                </Button>
+                <Button Margin="5,5,5,0" MinHeight="40" Command="{Binding CommandExportImage}" Template="{StaticResource ButtonTemplate}" ToolTip="Экспорт в файл результатов расчета">
+                    <TextBlock Text="Сохранить результаты в файл" Foreground="{StaticResource ColorForeground}" FontWeight="Bold"/>
+                </Button>
+                <TextBlock Margin="5" Text="Результаты расчета:" FontSize="20" Foreground="{DynamicResource ForegroundLabel}"/>
+                <TextBlock Margin="5,0" Text="{Binding ResultRascheta}" FontSize="16" Foreground="#E8E8E8"/>
+                <TextBlock Margin="5,0" Text="Страховая премия:" FontSize="20" Foreground="{DynamicResource ForegroundLabel}"/>
+                <TextBlock Margin="5,0" Text="{Binding StrahPrem}" FontSize="24" Foreground="#E8E8E8" TextAlignment="Right"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

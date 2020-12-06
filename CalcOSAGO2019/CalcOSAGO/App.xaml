@@ -1,0 +1,23 @@
+﻿<Application x:Class="CalcOSAGO.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CalcOSAGO"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="assets/restyles.xaml"/>
+                <ResourceDictionary Source="assets/ComboBoxTheme.xaml"/>
+                <ResourceDictionary Source="assets/ToolTipTheme.xaml"/>
+                <ResourceDictionary Source="assets/ButtonTheme.xaml"/>
+                <ResourceDictionary Source="assets/LabelTheme.xaml"/>
+                <ResourceDictionary Source="assets/TextBoxTheme.xaml"/>
+                <ResourceDictionary Source="assets/GroupBoxTheme.xaml"/>
+                <ResourceDictionary Source="assets/DataGridTheme.xaml"/>
+                <ResourceDictionary Source="assets/CheckBoxTheme.xaml"/>
+                <ResourceDictionary Source="assets/ScrollBarTheme.xaml"/>
+                <ResourceDictionary Source="assets/DatePickerTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

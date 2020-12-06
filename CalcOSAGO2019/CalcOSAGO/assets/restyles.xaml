@@ -1,0 +1,80 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+                    xmlns:localprimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data">
+
+    <!--=====================================-->
+    <!--цвет полосы ScrollBar-->
+    <SolidColorBrush x:Key="ThumbColor" Color="#FF5BC1CF"/>
+    <!--=====================================-->
+
+    <!--ОБЪЯВЛЕНИЕ КОНВЕРТЕРА-->
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    
+    
+
+    <!--ЦВЕТ ОСНОВНЫХ НАДПИСЕЙ-->
+    <SolidColorBrush x:Key="ColorForeground" Color="#354d46"/>
+
+    <!--СТИЛЬ ДЛЯ WINDOW?????????????-->
+    <Style TargetType="Window">
+        <Setter Property="Background" Value="#28909F"/>
+        <Setter Property="Foreground" Value="#FFD16D"/>
+    </Style>
+    <!--=====================================-->
+    
+    <!--ЦВЕТ ДЛЯ ПЕРЕДНЕГО ПЛАНА Label***********-->
+    <SolidColorBrush x:Key="ForegroundLabel" Color="#3e5951"/>
+    <!--=====================================-->
+    
+    <!--=====================================-->
+    <!--ЦВЕТОВЫЕ РЕСУРСЫ КНОПКИ**********-->
+    <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#0D5C67" Offset="0"/>
+        <GradientStop Color="#7AC5CF" Offset="0.25"/>
+        <GradientStop Color="#5BC1CF" Offset="0.5"/>
+        <GradientStop Color="#346F77" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonMouseOverBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#0D5C67" Offset="0"/>
+        <GradientStop Color="#6bacb5" Offset="0.25"/>
+        <GradientStop Color="#50a9b5" Offset="0.5"/>
+        <GradientStop Color="#346F77" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonPressedBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#0D5C67" Offset="0"/>
+        <GradientStop Color="#6bacb5" Offset="0.25"/>
+        <GradientStop Color="#0D5C67" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonFocusedBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FCD571" Offset="0"/>
+        <GradientStop Color="#FCC73F" Offset="0.5"/>
+        <GradientStop Color="#FCC73F" Offset="0.5"/>
+        <GradientStop Color="#FCD571" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonDisabledBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FFE4E4E4" Offset="0"/>
+        <GradientStop Color="#FFBBBBBB" Offset="0.5"/>
+        <GradientStop Color="#FFDADADA" Offset="0.5"/>
+        <GradientStop Color="#FCD571" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TmplBtnBorderNormal" Color="#5F897D"/>
+    <!--=====================================-->
+    <!--Цвет бордюра GroupBox*********-->
+    <SolidColorBrush x:Key="GroupBoxBorderColor" Color="#46665d"/>
+    <!--=====================================-->
+    <!--Цвет бордюра GroupBox2*********-->
+    <SolidColorBrush x:Key="GroupBoxBorderColor2" Color="#4c6e64"/>
+    <!--=====================================-->
+    
+
+    <!--СТИЛЬ ДЛЯ DatePicker-->
+    <!--<Style TargetType="DatePicker">
+        <Setter Property="Background" Value="#FF346F77"/>
+    </Style>-->
+    <!--=====================================-->
+    
+
+</ResourceDictionary>
+
+
